@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>tchan</title>
+
+    <style>
+
+        /* =====================================================
+           ✦✦✦ EASY EDITING ✦✦✦
+           ===================================================== */
+
+        :root {
+            --background: #000000;
+            --text: #FCDCEC;
+        }
+
+
+        /* =====================================================
+           GENERAL
+           ===================================================== */
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            background-color: var(--background);
+            color: var(--text);
+
+            font-family: "Courier New", monospace;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .page {
+            width: 90%;
+            max-width: 1000px;
+
+            text-align: center;
+        }
+
+
+        /* =====================================================
+           MENU
+           ===================================================== */
+
+        #menu {
+            display: block;
+        }
+
+        .menu-title {
+            font-size: 32px;
+            margin-bottom: 35px;
+        }
+
+        .menu-button {
+            background: #000000;
+            color: var(--text);
+
+            border: 2px solid var(--text);
+
+            padding: 10px 30px;
+
+            font-family: "Courier New", monospace;
+            font-size: 18px;
+
+            cursor: pointer;
+        }
+
+        .menu-button:hover {
+            background: var(--text);
+            color: #000000;
+        }
+
+
+        /* =====================================================
+           DIARY
+           ===================================================== */
+
+        #diary {
+            display: none;
+        }
+
+        #diary-image {
+            display: block;
+
+            width: auto;
+            height: auto;
+
+            max-width: 100%;
+            max-height: 75vh;
+
+            margin: 0 auto;
+        }
+
+
+        /* =====================================================
+           NAVIGATION
+           ===================================================== */
+
+        .navigation {
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            gap: 25px;
+
+            margin-top: 20px;
+        }
+
+        .nav-button {
+            background: transparent;
+            color: var(--text);
+
+            border: none;
+
+            font-family: "Courier New", monospace;
+            font-size: 30px;
+
+            cursor: pointer;
+
+            padding: 5px 15px;
+        }
+
+        .nav-button:hover {
+            color: #FFFFFF;
+        }
+
+        #page-number {
+            color: var(--text);
+            font-size: 16px;
+        }
+
+
+        /* =====================================================
+           FINAL MESSAGE
+           ===================================================== */
+
+        #final-message {
+            display: none;
+
+            width: 100%;
+            min-height: 300px;
+
+            justify-content: center;
+            align-items: center;
+
+            cursor: pointer;
+        }
+
+        #final-text {
+            color: var(--text);
+
+            font-size: 22px;
+            line-height: 2;
+
+            white-space: pre-line;
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <div class="page">
+
+
+        <!-- =================================================
+             MENU
+             ================================================= -->
+
+        <div id="menu">
+
+            <div class="menu-title">
+                tchan
+            </div>
+
+            <button
+                class="menu-button"
+                onclick="openDiary()"
+            >
+                diary
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             DIARY
+             ================================================= -->
+
+        <div id="diary">
+
+            <img
+                id="diary-image"
+                src="page1.png"
+                alt="Diary page 1"
+            >
+
+            <div class="navigation">
+
+                <button
+                    class="nav-button"
+                    onclick="previousPage()"
+                >
+                    &lt;
+                </button>
+
+                <span id="page-number">
+                    1 / 10
+                </span>
+
+                <button
+                    class="nav-button"
+                    onclick="nextPage()"
+                >
+                    &gt;
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             FINAL MESSAGE
+             ================================================= -->
+
+        <div
+            id="final-message"
+            onclick="nextFinalMessage()"
+        >
+
+            <div id="final-text"></div>
+
+        </div>
+
+
+    </div>
+
+
+    <script>
+
+        /* =====================================================
+           DIARY
+           ===================================================== */
+
+        let currentPage = 1;
+
+        const totalPages = 10;
+
+
+        function openDiary() {
+
+            document.getElementById("menu").style.display = "none";
+
+            document.getElementById("diary").style.display = "block";
+
+            currentPage = 1;
+
+            updateDiary();
+
+        }
+
+
+        function updateDiary() {
+
+            document.getElementById("diary-image").src =
+                "page" + currentPage + ".png";
+
+            document.getElementById("diary-image").alt =
+                "Diary page " + currentPage;
+
+            document.getElementById("page-number").textContent =
+                currentPage + " / " + totalPages;
+
+        }
+
+
+        function nextPage() {
+
+            if (currentPage < totalPages) {
+
+                currentPage++;
+
+                updateDiary();
+
+            } else {
+
+                openFinalPage();
+
+            }
+
+        }
+
+
+        function previousPage() {
+
+            if (currentPage > 1) {
+
+                currentPage--;
+
+                updateDiary();
+
+            }
+
+        }
+
+
+        /* =====================================================
+           FINAL MESSAGES
+           ===================================================== */
+
+        const finalMessages = [
+
+            "r pmdv rg",
+
+            "r'n hliib uli nzprmt blf wl zoo gsrh",
+
+            "yfg r'n gifob gszmpufool",
+
+            "mld r pml d dsb r xlfow lmob hnvoo gsv hvmt lu ilggmrt"
+
+        ];
+
+
+        let finalMessageIndex = 0;
+
+
+        function openFinalPage() {
+
+            document.getElementById("diary").style.display = "none";
+
+            document.getElementById("final-message").style.display = "flex";
+
+            finalMessageIndex = 0;
+
+            document.getElementById("final-text").textContent =
+                finalMessages[finalMessageIndex];
+
+        }
+
+
+        function nextFinalMessage() {
+
+            finalMessageIndex++;
+
+            if (finalMessageIndex >= finalMessages.length) {
+
+                window.location.href =
+                    "https://tsukasachann4.github.io/tsukasaishigh/";
+
+                return;
+
+            }
+
+            document.getElementById("final-text").textContent =
+                finalMessages[finalMessageIndex];
+
+        }
+
+    </script>
+
+</body>
+</html>
